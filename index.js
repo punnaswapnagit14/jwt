@@ -40,18 +40,18 @@ app.get("/books/", async (request, response) => {
     response.status(401);
     response.send("Invalid Access Token");
   } else {
-    jwt.verify(jwtToken, "djaslkdjaljdajld", async (error, payload) => {
+    jwt.verify(jwtToken, "djaslkdjaljdajld", async (error, user) => {
       if (error) {
         response.status(401);
         response.send("Invalid Access Token");
       } else {
-        const getBooksQuery = `
-                SELECT
-                *
-                FROM
-                book
-                ORDER BY
-                book_id;`;
+        const getBooksQuery = ` 
+                        SELECT
+                        *
+                        FROM
+                        book
+                        ORDER BY
+                        book_id;`;
         const booksArray = await db.all(getBooksQuery);
         response.send(booksArray);
       }
